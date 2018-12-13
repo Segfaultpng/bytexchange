@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="Search">Buscar</string>
+    <string name="Portfolio">Portafolio</string>
+    <string name="Current">Corriente</string>
+    <string name="Open">Abierto</string>
+</resources>

@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">bytexchange</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_activity_fullscreen_search">FullscreenSearchActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="Search">Search</string>
+    <string name="Portfolio">Portfolio</string>
+    <string name="Current">Current</string>
+    <string name="Open">Open</string>
 </resources>
