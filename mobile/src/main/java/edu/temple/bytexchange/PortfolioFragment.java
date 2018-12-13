@@ -1,6 +1,7 @@
 package edu.temple.bytexchange;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.FileObserver;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,6 +28,8 @@ import java.util.List;
 public class PortfolioFragment extends Fragment {
 
     final String portfile = "port_file_test3.txt";
+
+    Context parent;
 
     PortAdapter portadapter;
 
@@ -81,9 +85,25 @@ public class PortfolioFragment extends Fragment {
         };
         observer.startWatching(); //START OBSERVING
 
+
+        portlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parentView, View view, int position, long id) {
+
+               // String planetName = (String) parentView.getItemAtPosition(position);
+
+                ((PortSymbolInterface) parent).portSymbolSelected(portadapter.getItem(position).getSymbol());
+            }
+        });
+
         return v;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.parent = context;
+    }
 
     public void readFile() throws IOException {
         FileInputStream fis = null;
@@ -126,6 +146,10 @@ public class PortfolioFragment extends Fragment {
             e.printStackTrace();
         }
 
+    }
+
+    interface PortSymbolInterface{
+        public void portSymbolSelected(String symbol);
     }
 
 }

@@ -14,7 +14,7 @@ import android.view.View;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements SearchActivity.GetSymbolInterface{
+public class MainActivity extends AppCompatActivity implements SearchActivity.GetSymbolInterface, PortfolioFragment.PortSymbolInterface{
 
     FloatingActionButton searchfab;
 
@@ -95,5 +95,10 @@ public class MainActivity extends AppCompatActivity implements SearchActivity.Ge
             fm.beginTransaction().replace(R.id.container_1, sd).addToBackStack(null).commit();
         }
 
+    }
+
+    @Override
+    public void portSymbolSelected(String symbol) {
+        symbolSelected(symbol);
     }
 }

@@ -127,7 +127,7 @@ public class StockDetailFragment extends Fragment {
 
             fOut.close();
 
-            readFile();
+
 
 
         } catch (FileNotFoundException e) {
