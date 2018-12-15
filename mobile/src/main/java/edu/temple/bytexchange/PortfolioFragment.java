@@ -147,6 +147,9 @@ public class PortfolioFragment extends Fragment {
                 sb.append(line);
             }
 
+
+            portadapter.notifyDataSetChanged();
+
             isr.close();
             fis.close();
 
