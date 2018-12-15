@@ -148,8 +148,6 @@ public class PortfolioFragment extends Fragment {
             }
 
 
-            portadapter.notifyDataSetChanged();
-
             isr.close();
             fis.close();
 
@@ -168,6 +166,7 @@ public class PortfolioFragment extends Fragment {
             try {
                 //when change read the file again.
                 readFile();
+                portadapter.notifyDataSetChanged();
             } catch (IOException e) {
                 e.printStackTrace();
             }
