@@ -156,12 +156,14 @@ public class PortfolioFragment extends Fragment {
 
     }
 
+    //Used to receive messages from FileUpdater
     class FileReceiver extends BroadcastReceiver {
 
 
         @Override
         public void onReceive(Context context, Intent intent) {
             try {
+                //when change read the file again.
                 readFile();
             } catch (IOException e) {
                 e.printStackTrace();

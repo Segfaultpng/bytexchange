@@ -18,6 +18,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+/*
+* Service to run in background every minute
+* */
 public class ChangeFileService extends IntentService {
 
     private String portfile = "";
@@ -48,6 +51,7 @@ public class ChangeFileService extends IntentService {
 
     }
 
+    //read file gets information for each stock in portfolio
     public void readFile() throws IOException {
 
         URL url = null;
@@ -68,12 +72,14 @@ public class ChangeFileService extends IntentService {
             String line;
             StringBuffer inputBuffer = new StringBuffer();
 
+            //read each line
             while ((line = file.readLine()) != null) {
 
 
                 if(lincounter == 0){
                     symbol = line;
 
+                    //get ready to get details for individual stock
                     url = new URL("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json/?symbol=" + symbol);
 
                     BufferedReader buffreader = new BufferedReader(new InputStreamReader(
@@ -88,6 +94,7 @@ public class ChangeFileService extends IntentService {
 
                     InputStream targetStream = new ByteArrayInputStream(sb.toString().getBytes());
 
+                    //save the new stock information we will rewrite it to the file
                     newStockData = readJsonStream(targetStream);
 
                 }else if(lincounter == 1){
@@ -95,18 +102,31 @@ public class ChangeFileService extends IntentService {
                 }else if(lincounter == 2){
                     oldcurentprice = Double.parseDouble(line);
 
+                    // when price changes overwrite the file
                     line = Double.toString(newStockData.getCurrentPrice());
                 }else if(lincounter == 3){
                     oldopenprice = Double.parseDouble(line);
 
+                    //when price changes overwrite the file/line
                     line = Double.toString(newStockData.getOpenPrice());
                 }
+
+                //stock seperator
+                /**
+                 * file looks like
+                 * Symbol
+                 * name
+                 * current price
+                 * open price
+                 * ---
+                 */
 
                 if (line.equals("---")){
                     lincounter = -1;
                 }
                 lincounter++;
 
+                //append this new line to the temple string we are making
                 inputBuffer.append(line);
                 inputBuffer.append('\n');
             }
@@ -117,6 +137,8 @@ public class ChangeFileService extends IntentService {
 
             // write the new String with the replaced line OVER the same file
             FileOutputStream fileOut = new FileOutputStream(getFilesDir()+ "/" +portfile);
+
+            //write the string to the file in which the receiver will fire
             fileOut.write(inputStr.getBytes());
             fileOut.close();
 

@@ -37,9 +37,11 @@ public class MainActivity extends AppCompatActivity implements SearchActivity.Ge
 
         Intent fileUpdater = new Intent(this, FileUpdater.class);
 
+        //start background service to check for file updates
         this.startService(fileUpdater);
 
 
+        //setup alarm manager to run my service every one minute
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 
         Intent myIntent = new Intent(this, ChangeFileService.class);

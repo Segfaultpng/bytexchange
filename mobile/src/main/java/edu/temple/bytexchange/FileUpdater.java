@@ -22,6 +22,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+/*
+* FileUpdater Class used to notify PorfolioFragment when file has changed
+* */
 public class FileUpdater extends IntentService {
 
     String portfile = "";
@@ -65,6 +68,7 @@ public class FileUpdater extends IntentService {
                 //Toast.makeText(getBaseContext(),  "portfolio updated", Toast.LENGTH_LONG).show();
 
                 if(event == CLOSE_WRITE && file.equals(portfile)){
+                    //when change broadcast event to PortfolioFragment
                     Intent fileUpdatedIntent = new Intent("com.mycompany.byteexhcnage.FILE_MESSAGE");
                     fileUpdatedIntent.putExtra(FILE_UPDATE_MESSAGE,"has been updated");
 

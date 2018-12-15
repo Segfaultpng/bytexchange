@@ -254,6 +254,7 @@ public class StockDetailFragment extends Fragment {
 
 
 
+//Will set our selectedStock after json is returned and parsed
     public void postData() {
 
         new Thread(){

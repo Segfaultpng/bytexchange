@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
+// Not used
 public class ApiManager {
 
 
