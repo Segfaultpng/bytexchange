@@ -20,7 +20,7 @@ import java.net.URL;
 
 public class ChangeFileService extends IntentService {
 
-    final String portfile = "port_file_test3.txt";
+    private String portfile = "";
 
 
     public ChangeFileService() {
@@ -29,8 +29,14 @@ public class ChangeFileService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public void onCreate() {
 
+        portfile = getResources().getString(R.string.currentFile);
+        super.onCreate();
+    }
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
 
         try {
             readFile();

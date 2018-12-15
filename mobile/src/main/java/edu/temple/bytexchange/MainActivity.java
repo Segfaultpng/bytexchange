@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity implements SearchActivity.Ge
         singlePane = findViewById(R.id.container_2) == null;
 
 
+        Intent fileUpdater = new Intent(this, FileUpdater.class);
+
+        this.startService(fileUpdater);
+
 
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 

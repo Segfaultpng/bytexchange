@@ -1,6 +1,7 @@
 package edu.temple.bytexchange;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,7 +44,7 @@ public class StockDetailFragment extends Fragment {
 
     StockShort selectedStock;
 
-    final String portfile = "port_file_test3.txt";
+     String portfile = "";
 
     TextView companyname,currentprice,openprice;
     WebView stockview;
@@ -68,6 +69,13 @@ public class StockDetailFragment extends Fragment {
         return  sd;
     }
 
+    @Override
+    public void onAttach(Context context) {
+
+        portfile = getResources().getString(R.string.currentFile);
+
+        super.onAttach(context);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

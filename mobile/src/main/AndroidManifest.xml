@@ -35,6 +35,11 @@
             android:name=".ChangeFileService"
             android:exported="false"
             />
+
+        <service
+            android:name=".FileUpdater"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

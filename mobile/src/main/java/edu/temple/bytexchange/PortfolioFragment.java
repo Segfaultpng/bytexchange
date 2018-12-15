@@ -2,6 +2,7 @@ package edu.temple.bytexchange;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.FileObserver;
 import android.support.v4.app.Fragment;
@@ -27,7 +28,7 @@ import java.util.List;
  */
 public class PortfolioFragment extends Fragment {
 
-    final String portfile = "port_file_test3.txt";
+     String portfile = "";
 
     Context parent;
 
@@ -47,6 +48,9 @@ public class PortfolioFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_portfolio, container, false);
 
+
+        portStocks.clear();
+
         try {
             readFile();
         } catch (IOException e) {
@@ -59,31 +63,6 @@ public class PortfolioFragment extends Fragment {
         ListView portlist = (ListView) v.findViewById(R.id.portlist);
 
         portlist.setAdapter(portadapter);
-
-        //observe file
-       FileObserver observer = new FileObserver(portfile) { // set up a file observer to watch this directory on sd card
-
-            @Override
-            public void onEvent(int event, String file) {
-
-
-                try {
-                    //read info from file again
-                    readFile();
-
-                    Toast.makeText(getActivity().getBaseContext(),  "portfolio updated", Toast.LENGTH_LONG).show();
-                    //notify adapter
-                    portadapter.notifyDataSetChanged();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                //}
-            }
-        };
-        observer.startWatching(); //START OBSERVING
 
 
         portlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -103,6 +82,8 @@ public class PortfolioFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.parent = context;
+
+        portfile = parent.getResources().getString(R.string.currentFile);
     }
 
     public void readFile() throws IOException {
@@ -147,6 +128,7 @@ public class PortfolioFragment extends Fragment {
         }
 
     }
+
 
     interface PortSymbolInterface{
         public void portSymbolSelected(String symbol);
