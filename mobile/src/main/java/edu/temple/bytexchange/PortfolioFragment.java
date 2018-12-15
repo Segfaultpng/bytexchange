@@ -1,8 +1,10 @@
 package edu.temple.bytexchange;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.FileObserver;
 import android.support.v4.app.Fragment;
@@ -28,6 +30,9 @@ import java.util.List;
  */
 public class PortfolioFragment extends Fragment {
 
+    FileReceiver myReceiver = null;
+    Boolean myReceiverIsRegistered = false;
+
      String portfile = "";
 
     Context parent;
@@ -48,8 +53,6 @@ public class PortfolioFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_portfolio, container, false);
 
-
-        portStocks.clear();
 
         try {
             readFile();
@@ -83,10 +86,34 @@ public class PortfolioFragment extends Fragment {
         super.onAttach(context);
         this.parent = context;
 
+        myReceiver = new FileReceiver();
+
         portfile = parent.getResources().getString(R.string.currentFile);
     }
 
+    @Override
+    public void onResume() {
+
+        if (!myReceiverIsRegistered) {
+            parent.registerReceiver(myReceiver, new IntentFilter("com.mycompany.byteexhcnage.FILE_MESSAGE"));
+            myReceiverIsRegistered = true;
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        if (myReceiverIsRegistered) {
+            parent.unregisterReceiver(myReceiver);
+            myReceiverIsRegistered = false;
+        }
+        super.onPause();
+    }
+
     public void readFile() throws IOException {
+
+        portStocks.clear();
+
         FileInputStream fis = null;
 
         String symbol = "";
@@ -127,6 +154,19 @@ public class PortfolioFragment extends Fragment {
             e.printStackTrace();
         }
 
+    }
+
+    class FileReceiver extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                readFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.FileObserver;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.JsonReader;
 import android.util.Log;
 import android.widget.Toast;
@@ -24,6 +25,8 @@ import java.net.URL;
 public class FileUpdater extends IntentService {
 
     String portfile = "";
+
+    final String FILE_UPDATE_MESSAGE = "FILEUPDATE";
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -48,8 +51,9 @@ public class FileUpdater extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
+        String test = getFilesDir().toString();
         //observe file
-        FileObserver observer = new FileObserver(portfile) { // set up a file observer to watch this directory on sd card
+        FileObserver observer = new FileObserver(getFilesDir().toString()) { // set up a file observer to watch this directory on sd card
 
             @Override
             public void onEvent(int event, String file) {
@@ -58,7 +62,17 @@ public class FileUpdater extends IntentService {
 
                 Log.d("File","file updated");
 
-                Toast.makeText(getBaseContext(),  "portfolio updated", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(),  "portfolio updated", Toast.LENGTH_LONG).show();
+
+                if(event == CLOSE_WRITE && file.equals(portfile)){
+                    Intent fileUpdatedIntent = new Intent("com.mycompany.byteexhcnage.FILE_MESSAGE");
+                    fileUpdatedIntent.putExtra(FILE_UPDATE_MESSAGE,"has been updated");
+
+                    sendBroadcast(fileUpdatedIntent);
+
+                }
+
+
 
 
             }
